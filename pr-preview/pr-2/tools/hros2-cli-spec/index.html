@@ -1,0 +1,3529 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="High-performance Interoperable Robotics on Zenoh">
+      
+      
+      
+        <link rel="canonical" href="https://zettascalelabs.github.io/hiroz/tools/hros2-cli-spec/">
+      
+      
+        <link rel="prev" href="../console/">
+      
+      
+        <link rel="next" href="../../bindings/python-quick-start/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>hros2 CLI (spec) - HIROZ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/home.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/actions.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hros2-cli-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="HIROZ" class="md-header__button md-logo" aria-label="HIROZ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 163" overflow="hidden"><path d="M67.5,0 C70.5,10.015361 71.5,23.0353303 70.5,39.0599078 C87.5,23.5360983 102.5,15.7741935 115.5,15.7741935 C108,23.2857143 108.272452,33.9711351 112.5,33.0506912 C124,30.546851 136.5,32.5499232 150,39.0599078 L150,153.269585 C150,165.695992 139.926407,175.769585 127.5,175.769585 L61.1792721,175.769585 C54.9660687,175.769585 49.9292721,170.732789 49.9292721,164.519585 C49.9292721,162.825588 50.3118282,161.153461 51.0483941,159.627979 C55.1904226,151.049532 63.9242912,142.158178 77.25,132.953917 C99,117.930876 107.25,107.414747 107.25,87.8847926 C107.25,76.6175115 101.235622,69.7933468 93,69.1059908 C84,68.3548387 77.25,72.8617512 77.25,79.6221198 C77.25,83.1274962 78.25,86.1321045 80.25,88.6359447 L45,114.175115 C42.5,117.680492 41.25,121.686636 41.25,126.193548 C31.75,126.193548 26.5,120.935484 25.5,110.419355 L30.5,74.1136713 C24.1666667,69.2729135 19.25,63.5140809 15.75,56.8371736 C21.5833333,59.8417819 27.3527952,61.6613272 33.0583855,62.2958096 L36,43.5668203 C38.5,30.546851 41.75,22.0337942 45.75,18.0276498 C45.25,27.0414747 46.25,38.0583717 48.75,51.078341 C59.25,35.5545315 65.5,18.5284178 67.5,0 Z M55.5,59.3410138 C54.8493151,62.5994361 52.5050666,67.1299821 48.4672671,72.9331549 C49.3254255,73.6214254 49.875,74.6796138 49.875,75.8663594 C49.875,77.9406086 48.1960678,79.6221198 46.125,79.6221198 C45.3413993,79.6221198 44.6139341,79.3814062 44.0134198,78.9679649 C42.9192012,80.380157 41.7480613,81.8501288 40.5,83.3778802 C48.0409322,84.7516633 53.0409322,83.2493592 55.5,78.8709677 C58.5613983,73.4201217 58.5,65.3502304 55.5,59.3410138 Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HIROZ
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              hros2 CLI (spec)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ZettaScaleLabs/hiroz" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ZettaScaleLabs/hiroz
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/quick-start/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../core-concepts/pubsub/" class="md-tabs__link">
+          
+  
+  
+  Core Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user-guide/networking/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../console/" class="md-tabs__link">
+          
+  
+  
+  Tools
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../bindings/python-quick-start/" class="md-tabs__link">
+          
+  
+  
+  Language Bindings
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../experimental/shm/" class="md-tabs__link">
+          
+  
+  
+  Advanced Topics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/feature-comparison/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="HIROZ" class="md-nav__button md-logo" aria-label="HIROZ" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 163" overflow="hidden"><path d="M67.5,0 C70.5,10.015361 71.5,23.0353303 70.5,39.0599078 C87.5,23.5360983 102.5,15.7741935 115.5,15.7741935 C108,23.2857143 108.272452,33.9711351 112.5,33.0506912 C124,30.546851 136.5,32.5499232 150,39.0599078 L150,153.269585 C150,165.695992 139.926407,175.769585 127.5,175.769585 L61.1792721,175.769585 C54.9660687,175.769585 49.9292721,170.732789 49.9292721,164.519585 C49.9292721,162.825588 50.3118282,161.153461 51.0483941,159.627979 C55.1904226,151.049532 63.9242912,142.158178 77.25,132.953917 C99,117.930876 107.25,107.414747 107.25,87.8847926 C107.25,76.6175115 101.235622,69.7933468 93,69.1059908 C84,68.3548387 77.25,72.8617512 77.25,79.6221198 C77.25,83.1274962 78.25,86.1321045 80.25,88.6359447 L45,114.175115 C42.5,117.680492 41.25,121.686636 41.25,126.193548 C31.75,126.193548 26.5,120.935484 25.5,110.419355 L30.5,74.1136713 C24.1666667,69.2729135 19.25,63.5140809 15.75,56.8371736 C21.5833333,59.8417819 27.3527952,61.6613272 33.0583855,62.2958096 L36,43.5668203 C38.5,30.546851 41.75,22.0337942 45.75,18.0276498 C45.25,27.0414747 46.25,38.0583717 48.75,51.078341 C59.25,35.5545315 65.5,18.5284178 67.5,0 Z M55.5,59.3410138 C54.8493151,62.5994361 52.5050666,67.1299821 48.4672671,72.9331549 C49.3254255,73.6214254 49.875,74.6796138 49.875,75.8663594 C49.875,77.9406086 48.1960678,79.6221198 46.125,79.6221198 C45.3413993,79.6221198 44.6139341,79.3814062 44.0134198,78.9679649 C42.9192012,80.380157 41.7480613,81.8501288 40.5,83.3778802 C48.0409322,84.7516633 53.0409322,83.2493592 55.5,78.8709677 C58.5613983,73.4201217 58.5,65.3502304 55.5,59.3410138 Z"/></svg>
+
+    </a>
+    HIROZ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ZettaScaleLabs/hiroz" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ZettaScaleLabs/hiroz
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/building/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Building
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/distro-compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distro Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pub/Sub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Actions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Actions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/actions-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/lifecycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lifecycle Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Networking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/config-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/config-advanced/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/interop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS 2 Interoperability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/bridge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cross-Distro Bridge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Messages & Serialization
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Messages & Serialization
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/message-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Message Cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/message-generation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Message Generation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/custom-messages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Messages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/protobuf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protobuf Serialization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../console/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    hiroz-console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    hros2 CLI (spec)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    hros2 CLI (spec)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command surface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parity-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 topic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 param
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 interface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 doctor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-and-exit-code-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output and exit-code contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-library-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required library work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-distribution-and-distro-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build, distribution, and distro handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delivery-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delivery phases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Language Bindings
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Language Bindings
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Python
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bindings/python-quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bindings/python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bindings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bindings/python-codegen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codegen Internals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Go
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Go
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bindings/go-quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bindings/go/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bindings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Topics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced Topics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experimental/shm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shared Memory (SHM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/feature-comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/ros2-to-hiroz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ROS 2 → hiroz API Mapping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experimental/rmw-zenoh-rs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rmw_zenoh_rs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../experimental/keyexpr-formats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Key Expression Formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/feature-flags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Flags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/nix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nix Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connection-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#global-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command surface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command surface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parity-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parity matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 topic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 action
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-param" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 param
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 interface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hros2-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hros2 doctor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#output-and-exit-code-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Output and exit-code contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#required-library-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required library work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-distribution-and-distro-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build, distribution, and distro handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delivery-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delivery phases
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/ZettaScaleLabs/hiroz/edit/main/docs/tools/hros2-cli-spec.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="hros2-cli-specification">hros2 CLI — Specification<a class="headerlink" href="#hros2-cli-specification" title="Permanent link">&para;</a></h1>
+<p><strong>Status: Phase 1 implemented</strong> in <code>crates/hiroz-cli</code> (binary <code>hros2</code>), plus
+the <code>param</code> group from Phase 2. Shipped today: <code>node list/info</code>,
+<code>topic list/info/type/find/echo/hz/bw/pub</code>, <code>service list/info/type/find</code>,
+<code>action list/info/type</code>, <code>param list/get/set/describe/dump/delete</code>, all with
+<code>--format {human,json,yaml}</code>. Still pending (need new hiroz library APIs, see
+<a href="#required-library-work">Required library work</a>): <code>service call</code>,
+<code>action send_goal</code>, <code>interface *</code>, <code>lifecycle *</code>, and <code>doctor</code>. See the
+crate <a href="https://github.com/ZettaScaleLabs/hiroz/blob/main/crates/hiroz-cli/README.md">README</a>
+for current usage.</p>
+<p><code>hros2</code> is a pure-Rust command-line tool for introspecting and interacting
+with a live ROS 2 graph, built entirely on the hiroz stack. It mirrors the
+command surface of the standard <code>ros2</code> CLI (<code>ros2 topic</code>, <code>ros2 node</code>,
+<code>ros2 service</code>, …) so existing muscle memory and scripts transfer directly —
+but it requires <strong>no ROS 2 installation, no Python, and no DDS</strong>. A single
+static binary talks to the graph through a Zenoh router.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This document is a design specification. It defines the command surface,
+architecture, and delivery phases for the tool before implementation
+begins. Where behavior is compared to the <code>ros2</code> CLI, the reference is
+ROS 2 Jazzy.</p>
+</div>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
+<p>The standard <code>ros2</code> CLI requires a full ROS 2 installation plus the message
+packages of every type it touches. On a robot, a CI runner, or a developer
+laptop that only runs hiroz (or <code>rmw_zenoh_cpp</code>) nodes, that is a heavy
+dependency for what amounts to graph queries and pub/sub plumbing.</p>
+<p>hiroz already contains all the machinery a CLI needs:</p>
+<ul>
+<li><strong>Graph introspection</strong> (<code>hiroz::graph::Graph</code>) — nodes, topics, services,
+  actions, endpoints, counts, QoS.</li>
+<li><strong>Dynamic messages</strong> (<code>hiroz::dynamic</code>) — subscribe to and publish on any
+  topic without compile-time knowledge of the type, using runtime schema
+  discovery through the ROS 2 Type Description service (REP-2016).</li>
+<li><strong>Parameter client</strong> (<code>hiroz::parameter::ParameterClient</code>) — the full
+  <code>ros2 param</code>-compatible service set.</li>
+</ul>
+<p><a href="../console/">hiroz-console</a> proves the approach: its <code>--headless --echo</code>
+mode is already a working prototype of <code>topic echo</code> for arbitrary types.
+<code>hros2</code> factors that capability into a scriptable, <code>ros2</code>-compatible CLI,
+while the console remains the interactive/monitoring TUI.</p>
+<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Command-level compatibility</strong> with the <code>ros2</code> CLI for the graph
+   introspection and interaction verbs (<code>node</code>, <code>topic</code>, <code>service</code>,
+   <code>action</code>, <code>param</code>, <code>interface</code>), including argument names and output
+   shapes close enough that typical scripts port with only the binary name
+   changed.</li>
+<li><strong>Zero ROS dependency</strong> — a single static binary per platform, working
+   against any <code>rmw_zenoh_cpp</code> or hiroz deployment.</li>
+<li><strong>Universal types</strong> — every data-plane command (<code>echo</code>, <code>pub</code>, <code>hz</code>,
+   <code>bw</code>, <code>call</code>) works with any message type discoverable at runtime, with
+   no local <code>.msg</code> files or recompilation.</li>
+<li><strong>Script-first output</strong> — every command supports <code>--format json</code> (and
+   YAML) with stable, documented schemas, in addition to human-readable
+   default output.</li>
+<li><strong>Thin frontend</strong> — the CLI contains argument parsing, formatting, and
+   orchestration only. All protocol capability lives in the <code>hiroz</code> library
+   crates so that Python/Go bindings and other tools inherit it.</li>
+</ol>
+<h2 id="non-goals">Non-Goals<a class="headerlink" href="#non-goals" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>ros2 run</code> / <code>ros2 launch</code> / <code>ros2 pkg</code></strong> — package management and
+  process launch are workspace/ament concerns, out of scope for a
+  graph-interaction tool.</li>
+<li><strong><code>ros2 daemon</code></strong> — the <code>ros2</code> CLI needs a discovery daemon because DDS
+  discovery is slow and per-process. hiroz discovery is centralized at the
+  Zenoh router, so there is nothing to daemonize; <code>hros2 daemon</code> is
+  intentionally absent.</li>
+<li><strong><code>ros2 bag</code></strong> — recording/playback is a large, separate effort
+  (candidate for a future <code>hros2 bag</code> built on <code>DynSub</code> + an MCAP writer,
+  but explicitly not part of this spec).</li>
+<li><strong><code>ros2 security</code>, <code>ros2 multicast</code></strong> — DDS-specific; not applicable to
+  the Zenoh transport.</li>
+<li><strong>A TUI</strong> — that is <a href="../console/">hiroz-console</a>'s job.</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<p>A new workspace crate <code>crates/hiroz-cli</code> producing the binary <code>hros2</code>.</p>
+<pre class="mermaid"><code>graph TD
+accTitle: hros2 CLI architecture layering
+accDescr: The hros2 binary is a thin clap frontend. It calls into the hiroz library crates for graph introspection, dynamic pub/sub, parameters, services, and actions, which communicate with the ROS 2 graph through a Zenoh router.
+    CLI["hros2 binary&lt;br/&gt;(crates/hiroz-cli)&lt;br/&gt;clap + formatting + orchestration"]
+    LIB["hiroz core library&lt;br/&gt;Graph · dynamic (DynPub/DynSub) · ParameterClient&lt;br/&gt;dynamic service client (new) · schema registry"]
+    PROTO["hiroz-protocol&lt;br/&gt;keyexpr formats: rmw-zenoh / ros2dds"]
+    Z["Zenoh router (rmw_zenohd / zenohd)"]
+    G["ROS 2 graph&lt;br/&gt;hiroz · rmw_zenoh_cpp · bridged DDS nodes"]
+
+    CLI --&gt; LIB
+    LIB --&gt; PROTO
+    PROTO --&gt; Z
+    Z &lt;--&gt; G</code></pre>
+<p>Design rules:</p>
+<ul>
+<li><strong>Library-first.</strong> Any capability the CLI needs that hiroz lacks (see
+  <a href="#required-library-work">Required library work</a>) is implemented in
+  <code>crates/hiroz</code> behind a public API, then consumed by the CLI. The CLI
+  crate depends on <code>hiroz</code>, <code>hiroz-msgs</code> (for <code>rcl_interfaces</code>,
+  <code>lifecycle_msgs</code>, and other well-known types), <code>clap</code> (derive),
+  <code>tokio</code>, <code>serde_json</code>, <code>serde_yaml</code>, and <code>anyhow</code>.</li>
+<li><strong>One short-lived hidden node.</strong> Each invocation creates a <code>ZContext</code> and
+  a single node named <code>_hros2_cli_&lt;pid&gt;</code> in namespace <code>/</code>, mirroring the
+  <code>ros2</code> CLI's <code>_ros2cli_*</code> daemon nodes. Commands that are pure graph
+  reads use the graph observer without creating discoverable endpoints
+  where possible (the zero-interference model proven by hiroz-console).</li>
+<li><strong>Async internally, synchronous UX.</strong> <code>#[tokio::main]</code>, structured with
+  per-command timeouts. <code>Ctrl-C</code> always exits cleanly (flush output,
+  destroy endpoints).</li>
+<li><strong>Errors</strong> are reported via <code>anyhow</code> context chains on stderr; stdout
+  carries only command output so pipelines stay clean.</li>
+</ul>
+<h3 id="connection-model">Connection model<a class="headerlink" href="#connection-model" title="Permanent link">&para;</a></h3>
+<p>hiroz has no multicast discovery: a Zenoh router must be reachable. The
+CLI resolves its connection in this order:</p>
+<ol>
+<li><code>--router &lt;ENDPOINT&gt;</code> flag</li>
+<li><code>HROS2_ROUTER</code> environment variable</li>
+<li>Default <code>tcp/127.0.0.1:7447</code></li>
+</ol>
+<p>The domain ID resolves from <code>--domain</code>, then <code>ROS_DOMAIN_ID</code>, then <code>0</code> —
+matching <code>ros2</code> CLI conventions.</p>
+<h3 id="global-options">Global options<a class="headerlink" href="#global-options" title="Permanent link">&para;</a></h3>
+<p>Available on every subcommand:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Env var</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-r, --router &lt;ENDPOINT&gt;</code></td>
+<td><code>HROS2_ROUTER</code></td>
+<td><code>tcp/127.0.0.1:7447</code></td>
+<td>Zenoh router endpoint</td>
+</tr>
+<tr>
+<td><code>-d, --domain &lt;ID&gt;</code></td>
+<td><code>ROS_DOMAIN_ID</code></td>
+<td><code>0</code></td>
+<td>ROS domain ID</td>
+</tr>
+<tr>
+<td><code>--backend &lt;BACKEND&gt;</code></td>
+<td><code>HROS2_BACKEND</code></td>
+<td><code>rmw-zenoh</code></td>
+<td>Key-expression format: <code>rmw-zenoh</code> (nodes on <code>rmw_zenoh_cpp</code>/hiroz) or <code>ros2dds</code> (nodes behind <code>zenoh-bridge-ros2dds</code>)</td>
+</tr>
+<tr>
+<td><code>--format &lt;FMT&gt;</code></td>
+<td>—</td>
+<td><code>human</code></td>
+<td>Output format: <code>human</code>, <code>json</code>, <code>yaml</code></td>
+</tr>
+<tr>
+<td><code>--timeout &lt;SECS&gt;</code></td>
+<td>—</td>
+<td><code>5</code></td>
+<td>Discovery/service timeout</td>
+</tr>
+<tr>
+<td><code>--spin-time &lt;SECS&gt;</code></td>
+<td>—</td>
+<td><code>1</code></td>
+<td>Graph settle time before list/info commands read the graph (parity with <code>ros2</code> <code>--spin-time</code>)</td>
+</tr>
+<tr>
+<td><code>-q, --quiet</code> / <code>-v, --verbose</code></td>
+<td><code>RUST_LOG</code></td>
+<td>—</td>
+<td>Log verbosity (logs go to stderr via <code>tracing</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>--format json</code> emits one JSON document per result — or one JSON object
+per line for streaming commands (<code>echo</code>, <code>hz</code>) — so output composes
+directly with <code>jq</code>.</p>
+</div>
+<h2 id="command-surface">Command surface<a class="headerlink" href="#command-surface" title="Permanent link">&para;</a></h2>
+<h3 id="parity-matrix">Parity matrix<a class="headerlink" href="#parity-matrix" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><code>ros2</code> command</th>
+<th style="text-align: center;"><code>hros2</code></th>
+<th style="text-align: center;">Phase</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>node list</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>Graph::get_node_names()</code></td>
+</tr>
+<tr>
+<td><code>node info</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>Graph::get_names_and_types_by_node</code>, action server/client queries</td>
+</tr>
+<tr>
+<td><code>topic list</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>Graph::get_topic_names_and_types()</code></td>
+</tr>
+<tr>
+<td><code>topic info</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>Graph::get_entities_by_topic</code> (incl. QoS with <code>--verbose</code>)</td>
+</tr>
+<tr>
+<td><code>topic type</code> / <code>find</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td>Graph queries</td>
+</tr>
+<tr>
+<td><code>topic echo</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>ZNode::create_dyn_sub_auto</code> (REP-2016 discovery)</td>
+</tr>
+<tr>
+<td><code>topic hz</code> / <code>bw</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td>Raw subscriber + rate/bandwidth windows (port of console measurement)</td>
+</tr>
+<tr>
+<td><code>topic pub</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>ZNode::create_dyn_pub</code> + YAML → <code>DynamicMessage</code></td>
+</tr>
+<tr>
+<td><code>topic delay</code></td>
+<td style="text-align: center;">⏩</td>
+<td style="text-align: center;">future</td>
+<td>Needs <code>std_msgs/Header</code> heuristics; low value initially</td>
+</tr>
+<tr>
+<td><code>service list</code> / <code>type</code> / <code>find</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>Graph::get_service_names_and_types()</code></td>
+</tr>
+<tr>
+<td><code>service info</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">1</td>
+<td><code>Graph::get_entities_by_service</code>, <code>count_by_service</code></td>
+</tr>
+<tr>
+<td><code>service call</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">2</td>
+<td>Requires new <strong>dynamic service client</strong> in hiroz</td>
+</tr>
+<tr>
+<td><code>service echo</code></td>
+<td style="text-align: center;">⏩</td>
+<td style="text-align: center;">future</td>
+<td>Requires service introspection events</td>
+</tr>
+<tr>
+<td><code>action list</code> / <code>info</code> / <code>type</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">2</td>
+<td><code>Graph::get_action_names_and_types()</code> and per-node queries</td>
+</tr>
+<tr>
+<td><code>action send_goal</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">3</td>
+<td>Requires new <strong>dynamic action client</strong> in hiroz</td>
+</tr>
+<tr>
+<td><code>param list</code> / <code>get</code> / <code>set</code> / <code>describe</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">2</td>
+<td><code>ParameterClient</code> (exists today)</td>
+</tr>
+<tr>
+<td><code>param dump</code> / <code>load</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">2</td>
+<td><code>ParameterClient</code> + <code>parameter::yaml</code></td>
+</tr>
+<tr>
+<td><code>param delete</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">2</td>
+<td>Set to <code>ParameterValue::NotSet</code> (undeclare), matching rcl semantics</td>
+</tr>
+<tr>
+<td><code>interface list</code> / <code>packages</code> / <code>package</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">2</td>
+<td>Bundled codegen assets + types observed live on the graph</td>
+</tr>
+<tr>
+<td><code>interface show</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">2</td>
+<td>Live: REP-2016 <code>get_type_description</code>; offline: bundled assets</td>
+</tr>
+<tr>
+<td><code>interface proto</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">3</td>
+<td>Generate a zero-valued YAML prototype from a <code>MessageSchema</code></td>
+</tr>
+<tr>
+<td><code>lifecycle nodes</code> / <code>get</code> / <code>list</code> / <code>set</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">3</td>
+<td>Typed clients on <code>lifecycle_msgs</code> services (types known at compile time)</td>
+</tr>
+<tr>
+<td><code>doctor</code> / <code>wtf</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">3</td>
+<td>Router reachability, graph sanity, type-hash mismatch scan</td>
+</tr>
+<tr>
+<td><code>run</code>, <code>launch</code>, <code>pkg</code>, <code>daemon</code>, <code>bag</code>, <code>security</code>, <code>multicast</code>, <code>component</code>, <code>extension_points</code>, <code>extensions</code></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">—</td>
+<td>Out of scope (see Non-Goals)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hros2-node"><code>hros2 node</code><a class="headerlink" href="#hros2-node" title="Permanent link">&para;</a></h3>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">$ </span>hros2<span class="w"> </span>node<span class="w"> </span>list
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="go">/talker</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="go">/listener</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="gp">$ </span>hros2<span class="w"> </span>node<span class="w"> </span>info<span class="w"> </span>/talker
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="go">/talker</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="go">  Subscribers:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="go">    /parameter_events: rcl_interfaces/msg/ParameterEvent</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="go">  Publishers:</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="go">    /chatter: std_msgs/msg/String</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="go">    /rosout: rcl_interfaces/msg/Log</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="go">  Service Servers:</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="go">    /talker/describe_parameters: rcl_interfaces/srv/DescribeParameters</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="go">    ...</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="go">  Service Clients:</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="go">  Action Servers:</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="go">  Action Clients:</span>
+</span></code></pre></div>
+<ul>
+<li><code>list</code> supports <code>--count-nodes</code> and <code>--all</code> (include hidden <code>_</code>-prefixed
+  nodes, which are excluded by default — including <code>hros2</code>'s own node).</li>
+<li>Output layout matches <code>ros2 node info</code> section-for-section so diff-based
+  test assertions against the real CLI are possible.</li>
+</ul>
+<h3 id="hros2-topic"><code>hros2 topic</code><a class="headerlink" href="#hros2-topic" title="Permanent link">&para;</a></h3>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gp">$ </span>hros2<span class="w"> </span>topic<span class="w"> </span>list<span class="w"> </span>-t
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="go">/chatter [std_msgs/msg/String]</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="go">/rosout [rcl_interfaces/msg/Log]</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="gp">$ </span>hros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/chatter
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="go">data: &#39;Hello World: 12&#39;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="go">---</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="gp">$ </span>hros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>/cmd_vel<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>.linear.x
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="gp">$ </span>hros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--rate<span class="w"> </span><span class="m">10</span><span class="w"> </span>/cmd_vel<span class="w"> </span>geometry_msgs/msg/Twist<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="s1">&#39;{linear: {x: 1.0}, angular: {z: 0.5}}&#39;</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="gp">$ </span>hros2<span class="w"> </span>topic<span class="w"> </span>hz<span class="w"> </span>/chatter
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="go">average rate: 10.002</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="go">        min: 0.099s max: 0.101s std dev: 0.00042s window: 50</span>
+</span></code></pre></div>
+<p>Subcommand details:</p>
+<ul>
+<li><strong><code>echo &lt;TOPIC&gt; [TYPE]</code></strong> — type is discovered automatically via
+  <code>create_dyn_sub_auto</code>; an explicit <code>TYPE</code> argument skips discovery when
+  the schema is in the local registry (bundled well-known types). Flags:
+  <code>--once</code>, <code>--times N</code>, <code>--field &lt;path&gt;</code> (dotted field selector),
+  <code>--no-arr</code> (elide arrays), <code>--truncate-length N</code>, <code>--qos-reliability</code>,
+  <code>--qos-durability</code>, <code>--qos-depth</code>, <code>--csv</code>. Human output is
+  block-style YAML with <code>---</code> separators, byte-compatible with
+  <code>ros2 topic echo</code> for the common cases.</li>
+<li><strong><code>pub &lt;TOPIC&gt; &lt;TYPE&gt; [VALUES]</code></strong> — <code>VALUES</code> is YAML, identical syntax to
+  <code>ros2 topic pub</code>. The YAML is validated against the <code>MessageSchema</code>
+  (obtained from the bundled registry, a live publisher, or a node serving
+  the type) and converted to a <code>DynamicMessage</code>; unknown fields are an
+  error, omitted fields take schema defaults/zero values. Flags: <code>--once</code>
+  / <code>-1</code>, <code>--rate HZ</code> (default 1), <code>--times N</code>, <code>--keep-alive SECS</code>,
+  QoS flags as for <code>echo</code>.</li>
+<li><strong><code>hz</code> / <code>bw &lt;TOPIC&gt;</code></strong> — use a raw (payload-agnostic) subscriber, so they
+  work even when schema discovery fails; port the windowed rate/bandwidth
+  measurement from <code>hiroz-console</code>. Flags: <code>--window N</code>, <code>--filter &lt;EXPR&gt;</code>
+  is out of scope.</li>
+<li><strong><code>info &lt;TOPIC&gt;</code></strong> — endpoint counts by default; <code>--verbose</code> adds
+  per-endpoint node name, GID, and QoS profile from graph data.</li>
+<li><strong><code>find &lt;TYPE&gt;</code></strong> / <strong><code>type &lt;TOPIC&gt;</code></strong> — direct graph queries; <code>find</code>
+  supports <code>--include-hidden-topics</code>.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Type hashes</p>
+<p>In <code>rmw-zenoh</code> backend mode, publishing requires the RIHS01 type hash to
+be part of the key expression. <code>hros2 topic pub</code> resolves the hash from
+(in order) a live endpoint of the same type on the graph, the bundled
+schema registry, or a <code>--type-hash</code> flag. In Humble-compatible builds
+(<code>no-type-hash</code>), this constraint disappears.</p>
+</div>
+<h3 id="hros2-service"><code>hros2 service</code><a class="headerlink" href="#hros2-service" title="Permanent link">&para;</a></h3>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp">$ </span>hros2<span class="w"> </span>service<span class="w"> </span>list<span class="w"> </span>-t
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="go">/talker/describe_parameters [rcl_interfaces/srv/DescribeParameters]</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="gp">$ </span>hros2<span class="w"> </span>service<span class="w"> </span>call<span class="w"> </span>/add_two_ints<span class="w"> </span>example_interfaces/srv/AddTwoInts<span class="w"> </span><span class="s1">&#39;{a: 2, b: 3}&#39;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="go">requester: making request: example_interfaces.srv.AddTwoInts_Request(a=2, b=3)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="go">response:</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="go">example_interfaces.srv.AddTwoInts_Response(sum=5)</span>
+</span></code></pre></div>
+<ul>
+<li><strong><code>call &lt;SERVICE&gt; &lt;TYPE&gt; [VALUES]</code></strong> — needs the new dynamic service
+  client (Phase 2). Request YAML handling is identical to <code>topic pub</code>.
+  Flags: <code>--rate HZ</code> (repeat calls), <code>--timeout SECS</code>. The human response
+  rendering follows <code>ros2</code> conventions; <code>--format json</code> emits
+  <code>{"request": ..., "response": ...}</code>.</li>
+<li><strong><code>list</code> / <code>type</code> / <code>find</code> / <code>info</code></strong> — pure graph reads (Phase 1).</li>
+</ul>
+<h3 id="hros2-action"><code>hros2 action</code><a class="headerlink" href="#hros2-action" title="Permanent link">&para;</a></h3>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>hros2<span class="w"> </span>action<span class="w"> </span>list<span class="w"> </span>-t
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="go">/fibonacci [action_tutorials_interfaces/action/Fibonacci]</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="gp">$ </span>hros2<span class="w"> </span>action<span class="w"> </span>info<span class="w"> </span>/fibonacci
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="go">Action: /fibonacci</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="go">Action clients: 1</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="go">    /teleop</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="go">Action servers: 1</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="go">    /fibonacci_action_server</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="gp">$ </span>hros2<span class="w"> </span>action<span class="w"> </span>send_goal<span class="w"> </span>--feedback<span class="w"> </span>/fibonacci<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span>action_tutorials_interfaces/action/Fibonacci<span class="w"> </span><span class="s1">&#39;{order: 5}&#39;</span>
+</span></code></pre></div>
+<ul>
+<li><code>list</code> / <code>info</code> / <code>type</code> are graph reads over the action endpoint kinds
+  (<code>EndpointKind::ActionServer</code> etc.) — Phase 2.</li>
+<li><code>send_goal</code> composes the dynamic service client (send goal, get result)
+  and a dynamic subscriber (feedback, status) — Phase 3. Flags:
+  <code>--feedback</code>, <code>--timeout</code>.</li>
+</ul>
+<h3 id="hros2-param"><code>hros2 param</code><a class="headerlink" href="#hros2-param" title="Permanent link">&para;</a></h3>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>hros2<span class="w"> </span>param<span class="w"> </span>list<span class="w"> </span>/talker
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="go">  use_sim_time</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="gp">$ </span>hros2<span class="w"> </span>param<span class="w"> </span>get<span class="w"> </span>/talker<span class="w"> </span>use_sim_time
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="go">Boolean value is: False</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="gp">$ </span>hros2<span class="w"> </span>param<span class="w"> </span><span class="nb">set</span><span class="w"> </span>/talker<span class="w"> </span>use_sim_time<span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="go">Set parameter successful</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="gp">$ </span>hros2<span class="w"> </span>param<span class="w"> </span>dump<span class="w"> </span>/talker
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="go">/talker:</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="go">  ros__parameters:</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="go">    use_sim_time: false</span>
+</span></code></pre></div>
+<p>All verbs map 1:1 onto the existing <code>ParameterClient</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Verb</th>
+<th><code>ParameterClient</code> API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>list [NODE]</code></td>
+<td><code>list()</code> (all nodes when <code>NODE</code> omitted, via graph node enumeration)</td>
+</tr>
+<tr>
+<td><code>get NODE NAME</code></td>
+<td><code>get()</code></td>
+</tr>
+<tr>
+<td><code>set NODE NAME VALUE</code></td>
+<td><code>set()</code> (value parsed as YAML scalar → <code>ParameterValue</code>, matching <code>ros2 param set</code> coercion rules)</td>
+</tr>
+<tr>
+<td><code>delete NODE NAME</code></td>
+<td><code>set()</code> with <code>ParameterValue::NotSet</code></td>
+</tr>
+<tr>
+<td><code>describe NODE NAME…</code></td>
+<td><code>describe()</code></td>
+</tr>
+<tr>
+<td><code>dump NODE</code></td>
+<td><code>list()</code> + <code>get()</code> → <code>parameter::yaml</code> document</td>
+</tr>
+<tr>
+<td><code>load NODE FILE</code></td>
+<td><code>parameter::yaml</code> parse → <code>set_atomically()</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="hros2-interface"><code>hros2 interface</code><a class="headerlink" href="#hros2-interface" title="Permanent link">&para;</a></h3>
+<p>Interface commands answer from two sources, merged: the <strong>bundled schema
+assets</strong> compiled into the binary (the same package set as <code>hiroz-msgs</code>:
+<code>std_msgs</code>, <code>geometry_msgs</code>, <code>sensor_msgs</code>, <code>rcl_interfaces</code>, …) and the
+<strong>live graph</strong> (types currently in use, with full definitions retrievable
+over REP-2016 <code>get_type_description</code> from any node serving the type).</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="gp">$ </span>hros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>std_msgs/msg/String
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="go">string data</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="gp">$ </span>hros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>/chatter<span class="w"> </span>--from-graph<span class="w">   </span><span class="c1"># resolve type live from a topic</span>
+</span></code></pre></div>
+<ul>
+<li><code>list</code> supports <code>--only-msgs</code>, <code>--only-srvs</code>, <code>--only-actions</code>.</li>
+<li><code>show</code> renders the canonical <code>.msg</code>-style definition from a
+  <code>MessageSchema</code>; <code>--all-comments</code>/<code>--no-comments</code> follow <code>ros2</code> flags
+  where the schema carries comments (bundled assets do; REP-2016
+  descriptions do not).</li>
+<li><code>proto &lt;TYPE&gt;</code> emits a zero-valued YAML skeleton ready to paste into
+  <code>topic pub</code>/<code>service call</code> (Phase 3).</li>
+</ul>
+<h3 id="hros2-lifecycle"><code>hros2 lifecycle</code><a class="headerlink" href="#hros2-lifecycle" title="Permanent link">&para;</a></h3>
+<p>Lifecycle interaction uses ordinary typed service clients against
+<code>lifecycle_msgs</code> (compiled into the binary), so no dynamic machinery is
+needed:</p>
+<ul>
+<li><code>nodes</code> — nodes exposing <code>~/get_state</code> (graph scan)</li>
+<li><code>get &lt;NODE&gt;</code> / <code>list &lt;NODE&gt;</code> / <code>set &lt;NODE&gt; &lt;TRANSITION&gt;</code> — thin wrappers
+  over <code>GetState</code>, <code>GetAvailableTransitions</code>, <code>ChangeState</code>.</li>
+</ul>
+<h3 id="hros2-doctor"><code>hros2 doctor</code><a class="headerlink" href="#hros2-doctor" title="Permanent link">&para;</a></h3>
+<p>A diagnostic sweep, replacing the network/platform checks of <code>ros2 doctor</code>
+with Zenoh-relevant ones:</p>
+<ol>
+<li>Router reachability and round-trip latency for the configured endpoint.</li>
+<li>Graph summary: node/topic/service counts, hidden-node census.</li>
+<li>Consistency checks: topics with publishers but no subscribers (and vice
+   versa), QoS incompatibilities (reliability/durability mismatches),
+   RIHS01 type-hash conflicts on the same topic.</li>
+<li>Backend sanity: warn when the graph looks like the <em>other</em> backend's
+   key-expression format (common misconfiguration).</li>
+</ol>
+<p>Exit code reflects findings (see below), so <code>hros2 doctor</code> slots into CI
+health checks.</p>
+<h2 id="output-and-exit-code-contract">Output and exit-code contract<a class="headerlink" href="#output-and-exit-code-contract" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>stdout</strong> — command results only. <strong>stderr</strong> — logs, progress, errors.</li>
+<li><code>--format json</code>: single commands emit one JSON document; streaming
+  commands (<code>echo</code>, <code>hz</code>, <code>bw</code>, <code>send_goal --feedback</code>) emit one JSON
+  object per line. JSON field names are stable API from 1.0.</li>
+<li>Exit codes: <code>0</code> success · <code>1</code> runtime error (unreachable router, service
+  timeout) · <code>2</code> usage error (clap) · <code>3</code> not found (topic/node/service/
+  param absent) · <code>4</code> type error (schema mismatch, bad YAML values) ·
+  for <code>doctor</code>: <code>0</code> healthy, <code>3</code> warnings, <code>1</code> failures.</li>
+</ul>
+<h2 id="required-library-work">Required library work<a class="headerlink" href="#required-library-work" title="Permanent link">&para;</a></h2>
+<p>The CLI is a thin frontend; these capabilities land in <code>crates/hiroz</code>
+first, each independently useful to library users:</p>
+<ol>
+<li><strong>Dynamic service client</strong> (<code>Phase 2</code>, blocks <code>service call</code>) —
+   <code>ZNode::create_dyn_client(service, schema_pair)</code> plus
+   <code>create_dyn_client_auto(service, timeout)</code> mirroring
+   <code>create_dyn_sub_auto</code>: resolve the <code>.srv</code> request/response schemas via
+   the graph + REP-2016, then CDR-serialize a <code>DynamicMessage</code> request and
+   deserialize the reply. Builds directly on the existing
+   <code>dynamic::type_description</code> conversion and <code>DynamicSerdeCdrSerdes</code>.</li>
+<li><strong>Service schema support in the schema registry</strong> — extend
+   <code>SchemaRegistry</code> to hold request/response pairs keyed by service type
+   name, and extend the bundled-asset loader to register <code>.srv</code> types.</li>
+<li><strong>Dynamic action client</strong> (<code>Phase 3</code>, blocks <code>action send_goal</code>) —
+   composition of (1) for <code>send_goal</code>/<code>get_result</code> and a <code>DynSub</code> for
+   feedback/status, following the action key-expression layout in
+   <code>hiroz-protocol</code>.</li>
+<li><strong>Schema → canonical text rendering</strong> (<code>Phase 2</code>, blocks
+   <code>interface show</code>) — pretty-printer from <code>MessageSchema</code> to <code>.msg</code>
+   syntax; lives beside the existing schema model.</li>
+<li><strong>YAML → <code>DynamicMessage</code></strong> (<code>Phase 1</code>, blocks <code>topic pub</code>) —
+   schema-checked conversion from <code>serde_yaml::Value</code> (strict on unknown
+   fields, defaulting for omitted ones). The inverse
+   (<code>dynamic_message_to_json</code>) already exists in hiroz-console and moves
+   into <code>hiroz::dynamic</code> so both tools share one formatter, gaining a YAML
+   renderer for <code>ros2</code>-compatible <code>echo</code> output.</li>
+</ol>
+<h2 id="build-distribution-and-distro-handling">Build, distribution, and distro handling<a class="headerlink" href="#build-distribution-and-distro-handling" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Crate:</strong> <code>crates/hiroz-cli</code>, binary <code>hros2</code>, edition 2024, added to the
+  workspace and to the release matrix alongside <code>hiroz-console</code>
+  (<code>bin-hros2-x86_64-linux</code>, <code>bin-hros2-aarch64-linux</code>,
+  <code>bin-hros2-aarch64-macos</code>), plus <code>cargo install --path crates/hiroz-cli</code>.</li>
+<li><strong>Distro is compile-time</strong> in hiroz (<code>jazzy</code> default; <code>humble</code>, <code>kilted</code>,
+  <code>lyrical</code> are mutually exclusive features gating type-hash behavior and
+  bundled message sets). <code>hros2</code> therefore ships per-distro builds; the
+  default artifact targets the current LTS. <code>hros2 --version</code> prints the
+  distro flavor and backend defaults. A runtime distro switch is
+  explicitly out of scope until hiroz itself supports it.</li>
+<li><strong>Feature flags:</strong> the CLI re-exports the distro features and a
+  <code>protobuf</code> passthrough; <code>default = ["jazzy"]</code>.</li>
+</ul>
+<h2 id="testing-strategy">Testing strategy<a class="headerlink" href="#testing-strategy" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Unit</strong> — YAML↔<code>DynamicMessage</code> conversion, output formatters, field
+   selectors, exit-code mapping (no network).</li>
+<li><strong>In-process integration</strong> — spin up hiroz nodes and the CLI's command
+   functions against a <code>zenohd</code> in the test harness (pattern already used
+   by <code>hiroz-tests</code>): every subcommand exercised against known graph
+   fixtures.</li>
+<li><strong>Interop / parity</strong> — extend the existing docker-compose harness
+   (hiroz container ↔ ROS 2 Jazzy container) to run <code>ros2 &lt;cmd&gt;</code> and
+   <code>hros2 &lt;cmd&gt;</code> against the same live graph and diff normalized outputs
+   for the parity-matrix commands (<code>node list/info</code>, <code>topic list/info/
+   echo</code>, <code>service list</code>, <code>param get/set/list</code>). This makes "clone of the
+   ros2 cli" a tested property, not an aspiration.</li>
+<li><strong>Round-trip</strong> — <code>hros2 topic pub</code> → <code>ros2 topic echo</code> and vice versa,
+   for primitives, nested types, arrays, and a custom type served only via
+   REP-2016.</li>
+</ol>
+<h2 id="delivery-phases">Delivery phases<a class="headerlink" href="#delivery-phases" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Phase</th>
+<th>Scope</th>
+<th>Depends on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td>Crate skeleton, global options, <code>node *</code>, <code>topic list/info/type/find/echo/hz/bw/pub</code>, <code>service list/type/find/info</code>, JSON/YAML output, interop parity harness</td>
+<td>Library items 5 (YAML→DynamicMessage)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td><code>param *</code>, <code>service call</code>, <code>action list/info/type</code>, <code>interface list/show/package(s)</code></td>
+<td>Library items 1, 2, 4</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td><code>action send_goal</code>, <code>lifecycle *</code>, <code>interface proto</code>, <code>doctor</code></td>
+<td>Library item 3</td>
+</tr>
+</tbody>
+</table>
+<p>Each phase is releasable on its own; the parity matrix above is the
+acceptance checklist per phase.</p>
+<h2 id="open-questions">Open questions<a class="headerlink" href="#open-questions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Command name for hidden-node filtering</strong> — <code>ros2</code> hides <code>_ros2cli_*</code>
+  by leading-underscore convention; hiroz graph queries return everything.
+  Decide whether hidden filtering lives in <code>Graph</code> (useful to console too)
+  or in the CLI.</li>
+<li><strong><code>topic echo --qos-*</code> defaults</strong> — <code>ros2 topic echo</code> adapts its QoS to
+  the publisher's offered QoS. Adopt the same adaptive behavior, or
+  default to sensor-data QoS with explicit flags?</li>
+<li><strong>Shell completions</strong> — clap can generate bash/zsh/fish completions;
+  decide whether to ship them in release artifacts (<code>hros2 completions
+  &lt;shell&gt;</code> subcommand is the likely answer).</li>
+<li><strong><code>hros2</code> vs <code>ros2</code> argument incompatibilities</strong> — <code>--router</code>/<code>--backend</code>
+  have no <code>ros2</code> equivalent; conversely <code>ros2</code>'s <code>--ros-args</code> passthrough
+  is meaningless here. Document the delta in a migration table once the
+  flag set stabilizes.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../console/" class="md-footer__link md-footer__link--prev" aria-label="Previous: hiroz-console">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                hiroz-console
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../bindings/python-quick-start/" class="md-footer__link md-footer__link--next" aria-label="Next: Quick Start">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Quick Start
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate", "content.action.edit", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.js"></script>
+      
+        <script src="../../javascripts/action-anim.js"></script>
+      
+        <script src="../../javascripts/flashcards.js"></script>
+      
+    
+  </body>
+</html>
