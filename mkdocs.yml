@@ -106,6 +106,7 @@ nav:
           - Protobuf Serialization: user-guide/protobuf.md
   - Tools:
       - hiroz-console: tools/console.md
+      - hros2 CLI (spec): tools/hros2-cli-spec.md
   - Language Bindings:
       - Python:
           - Quick Start: bindings/python-quick-start.md
