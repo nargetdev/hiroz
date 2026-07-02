@@ -1,0 +1,35 @@
+[package]
+name = "hiroz-cli"
+version = "0.1.0"
+edition = "2024"
+description = "hros2 — a pure-Rust clone of the ros2 CLI, built on hiroz"
+homepage = "https://github.com/ZettaScaleLabs/hiroz"
+default-run = "hros2"
+
+[[bin]]
+name = "hros2"
+path = "src/main.rs"
+
+[dependencies]
+# hiroz with both key-expression backends so `--backend ros2dds` works, mirroring
+# hiroz-console. Default features (jazzy + rmw-zenoh) are kept.
+hiroz = { path = "../hiroz", features = ["ros2dds"] }
+hiroz-protocol = { path = "../hiroz-protocol", features = ["ros2dds"] }
+clap = { workspace = true, features = ["derive", "env"] }
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "signal", "time"] }
+zenoh = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+anyhow = "1.0"
+tracing = { workspace = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+libc = "0.2"
+
+[features]
+default = ["jazzy"]
+# ROS 2 distro selection (passthrough to hiroz — mutually exclusive).
+jazzy = ["hiroz/jazzy"]
+humble = ["hiroz/humble"]
+kilted = ["hiroz/kilted"]
+lyrical = ["hiroz/lyrical"]

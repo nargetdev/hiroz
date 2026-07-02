@@ -1,6 +1,14 @@
 # hros2 CLI — Specification
 
-**Status: Draft — not yet implemented.**
+**Status: Phase 1 implemented** in `crates/hiroz-cli` (binary `hros2`), plus
+the `param` group from Phase 2. Shipped today: `node list/info`,
+`topic list/info/type/find/echo/hz/bw/pub`, `service list/info/type/find`,
+`action list/info/type`, `param list/get/set/describe/dump/delete`, all with
+`--format {human,json,yaml}`. Still pending (need new hiroz library APIs, see
+[Required library work](#required-library-work)): `service call`,
+`action send_goal`, `interface *`, `lifecycle *`, and `doctor`. See the
+crate [README](https://github.com/ZettaScaleLabs/hiroz/blob/main/crates/hiroz-cli/README.md)
+for current usage.
 
 `hros2` is a pure-Rust command-line tool for introspecting and interacting
 with a live ROS 2 graph, built entirely on the hiroz stack. It mirrors the

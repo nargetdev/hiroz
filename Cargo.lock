@@ -1403,6 +1403,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "hiroz-cli"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "hiroz",
+ "hiroz-protocol",
+ "libc",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "zenoh",
+]
+
+[[package]]
 name = "hiroz-codegen"
 version = "0.1.0"
 dependencies = [
