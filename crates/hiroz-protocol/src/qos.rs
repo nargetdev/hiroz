@@ -98,12 +98,16 @@ impl QosProfile {
         }
 
         let history = match history_parts[0] {
-            "" | "1" => {
-                // KeepLast - parse depth
-                let depth = history_parts[1]
-                    .parse::<usize>()
-                    .map_err(|_| QosDecodeError::InvalidHistory)?;
-                QosHistory::KeepLast(depth)
+            "" | "0" | "1" => {
+                // KeepLast (empty/"0" = system-default kind, "1" = explicit KEEP_LAST).
+                // The depth field may be empty when the endpoint leaves it unspecified
+                // (e.g. foxglove_bridge). rmw_zenoh_cpp treats that as the default depth
+                // rather than a decode failure, so mirror that instead of dropping the
+                // whole entity — otherwise such topics vanish from the graph.
+                match history_parts[1].parse::<usize>() {
+                    Ok(depth) => QosHistory::KeepLast(depth),
+                    Err(_) => default_qos.history,
+                }
             }
             "2" => QosHistory::KeepAll,
             _ => return Err(QosDecodeError::InvalidHistory),
@@ -180,5 +184,37 @@ impl Display for QosDecodeError {
             QosDecodeError::InvalidDurability => write!(f, "Invalid durability value"),
             QosDecodeError::InvalidHistory => write!(f, "Invalid history value"),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // Regression: a working publisher (e.g. the kuka telemetry nodes) encodes an
+    // explicit history depth. This must keep decoding to KeepLast(depth).
+    #[test]
+    fn decode_history_with_explicit_depth() {
+        let qos = QosProfile::decode("::,10:,:,:,,").expect("should decode");
+        assert_eq!(qos.history, QosHistory::KeepLast(10));
+    }
+
+    // Regression: endpoints that leave the history depth unspecified (observed from
+    // foxglove_bridge: `.../::,:,:,:,,`) must NOT fail to decode — otherwise the graph
+    // silently drops the entity and its topic disappears from `topic list`. rmw_zenoh_cpp
+    // treats the empty depth as the default, so we fall back to the default history.
+    #[test]
+    fn decode_history_with_empty_depth_falls_back_to_default() {
+        let qos = QosProfile::decode("::,:,:,:,,").expect("empty depth must not error");
+        assert_eq!(qos.history, QosProfile::default().history);
+    }
+
+    // Truly malformed history kinds (kind precedes the comma, e.g. "9,5") are still rejected.
+    #[test]
+    fn decode_rejects_unknown_history_kind() {
+        assert!(matches!(
+            QosProfile::decode("::9,5:,:,:,,"),
+            Err(QosDecodeError::InvalidHistory)
+        ));
     }
 }
