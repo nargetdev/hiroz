@@ -1,0 +1,20 @@
+[package]
+name = "hros2"
+version = "0.1.0"
+edition = "2024"
+description = "hros2 — a ros2-compatible CLI clone built on the Hiroz (ROS 2 on Zenoh) stack"
+homepage = "https://github.com/ZettaScaleLabs/hiroz"
+default-run = "hros2"
+
+[[bin]]
+name = "hros2"
+path = "src/main.rs"
+
+# Uses hiroz default features: config-builders, jazzy, rmw-zenoh
+# rmw-zenoh keyexpr format = wire-compatible with rmw_zenoh_cpp (the official ROS 2 Zenoh RMW)
+[dependencies]
+hiroz = { path = "../hiroz" }
+hiroz-protocol = { path = "../hiroz-protocol", default-features = false, features = ["std", "rmw-zenoh"] }
+clap = { workspace = true, features = ["derive"] }
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "signal", "time"] }
+zenoh = { workspace = true }

@@ -8,6 +8,7 @@ homepage = "https://github.com/ZettaScaleLabs/hiroz"
 resolver = "2"
 members = [
   "crates/hiroz",
+  "crates/hros2",
   "crates/hiroz-cdr",
   "crates/hiroz-codegen",
   "crates/hiroz-derive",
