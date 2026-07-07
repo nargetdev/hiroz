@@ -4,14 +4,22 @@
 //! so it introspects a live ROS 2 graph by connecting to a Zenoh router and reading
 //! the ROS 2 liveliness tokens — no ROS installation required.
 //!
-//! Supported today: `topic list`, `node list`, `service list`.
+//! Supported today: `topic list`, `topic echo`, `node list`, `service list`.
 
+mod format;
+
+use std::num::NonZeroUsize;
 use std::time::Duration;
 
-use clap::{Args, Parser, Subcommand};
+use clap::{Args, Parser, Subcommand, ValueEnum};
 use hiroz::Builder;
 use hiroz::context::ZContextBuilder;
+use hiroz::entity::{Entity, EndpointKind};
+use hiroz::qos::{QosDurability, QosHistory, QosProfile, QosReliability};
 use hiroz_protocol::KeyExprFormat;
+use hiroz_protocol::qos::{
+    QosDurability as ProtoDurability, QosReliability as ProtoReliability,
+};
 
 /// hros2: ROS 2 CLI over Zenoh (Hiroz).
 #[derive(Parser, Debug)]
@@ -66,6 +74,56 @@ enum Command {
 enum TopicCmd {
     /// Output a list of available topics.
     List(ListArgs),
+    /// Output messages from a topic (decoded dynamically, no compiled type needed).
+    Echo(EchoArgs),
+}
+
+#[derive(Args, Debug)]
+struct EchoArgs {
+    /// Topic to echo (e.g. /kuka/pose). Relative names are resolved against `/`.
+    topic: String,
+
+    /// Print one message and exit (alias for `--times 1`).
+    #[arg(long, conflicts_with = "times")]
+    once: bool,
+
+    /// Print this many messages, then exit.
+    #[arg(long, value_name = "N")]
+    times: Option<u64>,
+
+    /// Emit one compact JSON object per message (no `---` separator) instead of YAML.
+    #[arg(long)]
+    json: bool,
+
+    /// Reliability QoS for the subscription (default: auto-detect from publishers).
+    #[arg(long, value_enum, default_value_t = ReliabilityArg::SystemDefault)]
+    qos_reliability: ReliabilityArg,
+
+    /// Durability QoS for the subscription (default: auto-detect from publishers).
+    #[arg(long, value_enum, default_value_t = DurabilityArg::SystemDefault)]
+    qos_durability: DurabilityArg,
+
+    /// History depth (KeepLast) for the subscription queue.
+    #[arg(long, value_name = "N", default_value_t = 10)]
+    qos_depth: usize,
+}
+
+/// `--qos-reliability` choices; `system_default` keeps the auto-detected value.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, ValueEnum)]
+enum ReliabilityArg {
+    #[default]
+    SystemDefault,
+    Reliable,
+    BestEffort,
+}
+
+/// `--qos-durability` choices; `system_default` keeps the auto-detected value.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, ValueEnum)]
+enum DurabilityArg {
+    #[default]
+    SystemDefault,
+    Volatile,
+    TransientLocal,
 }
 
 #[derive(Subcommand, Debug)]
@@ -137,6 +195,16 @@ async fn main() {
 }
 
 async fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    // Route logs to stderr so command stdout (topic lists, echo YAML/JSON) stays pipe-clean.
+    // Zenoh emits through the `tracing` facade, so our subscriber captures its logs too.
+    if cli.debug {
+        use tracing_subscriber::{EnvFilter, fmt};
+        let _ = fmt()
+            .with_writer(std::io::stderr)
+            .with_env_filter(EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("debug")))
+            .try_init();
+    }
+
     let router = resolve_router(&cli);
     let domain = resolve_domain(&cli);
 
@@ -159,14 +227,11 @@ async fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         }
     }
 
-    let mut builder = ZContextBuilder::default()
+    let ctx = ZContextBuilder::default()
         .with_domain_id(domain)
         .keyexpr_format(KeyExprFormat::RmwZenoh)
-        .with_router_endpoint(&router)?;
-    if cli.debug {
-        builder = builder.with_logging_enabled();
-    }
-    let ctx = builder.build()?;
+        .with_router_endpoint(&router)?
+        .build()?;
 
     let graph = ctx.graph().clone();
 
@@ -187,6 +252,9 @@ async fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         Command::Topic { action: TopicCmd::List(args) } => {
             let mut items = graph.get_topic_names_and_types();
             print_names_and_types(&mut items, &args);
+        }
+        Command::Topic { action: TopicCmd::Echo(args) } => {
+            echo_topic(&ctx, &graph, &args, Duration::from_millis(cli.timeout_ms)).await?;
         }
         Command::Service { action: ServiceCmd::List(args) } => {
             let mut items = graph.get_service_names_and_types();
@@ -237,6 +305,126 @@ fn print_names_and_types(items: &mut Vec<(String, String)>, args: &ListArgs) {
         } else {
             println!("{name}");
         }
+    }
+}
+
+/// Subscribe to `args.topic` and stream decoded messages (`ros2 topic echo` clone).
+async fn echo_topic(
+    ctx: &hiroz::context::ZContext,
+    graph: &hiroz::graph::Graph,
+    args: &EchoArgs,
+    timeout: Duration,
+) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    // A node (with the type-description service) is needed for schema discovery; we don't
+    // publish parameters, so skip those services.
+    let node = ctx
+        .create_node("hros2")
+        .with_type_description_service()
+        .without_parameters()
+        .build()?;
+
+    let qualified = qualify_topic(&args.topic);
+    let qos = resolve_echo_qos(graph, &qualified, args);
+
+    // create_dyn_sub_auto_qos preserves the publisher's remote type hash, so the sub's
+    // key expression matches the publisher even though we override QoS.
+    let sub = node
+        .create_dyn_sub_auto_qos(&qualified, timeout, qos)
+        .await
+        .map_err(|e| -> Box<dyn std::error::Error + Send + Sync> {
+            format!("could not subscribe to {qualified} (no publisher / schema discovery failed): {e}")
+                .into()
+        })?;
+
+    // remaining: None = stream forever; Some(n) = stop after n messages.
+    let mut remaining: Option<u64> = if args.once { Some(1) } else { args.times };
+
+    loop {
+        tokio::select! {
+            biased;
+            // Ctrl-C during streaming exits gracefully (0), matching ros2.
+            _ = tokio::signal::ctrl_c() => break,
+            msg = sub.async_recv() => match msg {
+                Ok(m) => {
+                    let value = format::dynamic_message_to_json(&m);
+                    if args.json {
+                        println!("{}", serde_json::to_string(&value)?);
+                    } else {
+                        print!("{}", serde_yaml::to_string(&value)?);
+                        println!("---");
+                    }
+                    if let Some(r) = remaining.as_mut() {
+                        *r -= 1;
+                        if *r == 0 {
+                            break;
+                        }
+                    }
+                }
+                // A decode error on one message shouldn't kill the stream (ros2 keeps going).
+                Err(e) => eprintln!("hros2: echo: recv error: {e}"),
+            }
+        }
+    }
+
+    Ok(())
+}
+
+/// Qualify a topic name against the root namespace: absolute names pass through,
+/// relative names get a leading `/` (hros2's node runs in namespace `/`).
+fn qualify_topic(topic: &str) -> String {
+    if topic.starts_with('/') {
+        topic.to_string()
+    } else {
+        format!("/{topic}")
+    }
+}
+
+/// Choose the subscription QoS the way `ros2 topic echo` does: auto-detect a profile
+/// compatible with the current publishers, then apply any explicit `--qos-*` overrides.
+fn resolve_echo_qos(graph: &hiroz::graph::Graph, qualified_topic: &str, args: &EchoArgs) -> QosProfile {
+    let pub_qos: Vec<hiroz_protocol::qos::QosProfile> = graph
+        .get_entities_by_topic(EndpointKind::Publisher, qualified_topic)
+        .iter()
+        .filter_map(|e| match e.as_ref() {
+            Entity::Endpoint(ep) => Some(ep.qos),
+            _ => None,
+        })
+        .collect();
+
+    // Best-effort/transient-local only when EVERY publisher offers it (otherwise a
+    // stricter reader would be incompatible); this mirrors ros2cli auto-detection.
+    let auto_reliability = if !pub_qos.is_empty()
+        && pub_qos.iter().all(|q| q.reliability == ProtoReliability::BestEffort)
+    {
+        QosReliability::BestEffort
+    } else {
+        QosReliability::Reliable
+    };
+    let auto_durability = if !pub_qos.is_empty()
+        && pub_qos.iter().all(|q| q.durability == ProtoDurability::TransientLocal)
+    {
+        QosDurability::TransientLocal
+    } else {
+        QosDurability::Volatile
+    };
+
+    let reliability = match args.qos_reliability {
+        ReliabilityArg::SystemDefault => auto_reliability,
+        ReliabilityArg::Reliable => QosReliability::Reliable,
+        ReliabilityArg::BestEffort => QosReliability::BestEffort,
+    };
+    let durability = match args.qos_durability {
+        DurabilityArg::SystemDefault => auto_durability,
+        DurabilityArg::Volatile => QosDurability::Volatile,
+        DurabilityArg::TransientLocal => QosDurability::TransientLocal,
+    };
+    let depth = NonZeroUsize::new(args.qos_depth).unwrap_or(NonZeroUsize::new(10).unwrap());
+
+    QosProfile {
+        reliability,
+        durability,
+        history: QosHistory::KeepLast(depth),
+        ..QosProfile::default()
     }
 }
 
