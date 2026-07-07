@@ -18,3 +18,8 @@ hiroz-protocol = { path = "../hiroz-protocol", default-features = false, feature
 clap = { workspace = true, features = ["derive"] }
 tokio = { workspace = true, features = ["rt-multi-thread", "macros", "signal", "time"] }
 zenoh = { workspace = true }
+# preserve_order = emit message fields in declaration order (ros2 rosidl behavior), not alphabetically
+serde_json = { workspace = true, features = ["preserve_order"] }
+serde_yaml = { workspace = true }
+# Route --debug logging to stderr so echo's stdout (YAML/JSON) stays pipe-clean
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

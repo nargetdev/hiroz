@@ -1134,6 +1134,42 @@ impl ZNode {
         .build()
     }
 
+    /// Like [`create_dyn_sub_auto`], but subscribes with an explicit QoS profile.
+    ///
+    /// This preserves the publisher-reported (remote) type hash from schema discovery
+    /// — exactly as [`create_dyn_sub_auto`] does — so the subscriber's key expression
+    /// still matches the publisher. Setting QoS via the lower-level [`create_dyn_sub`]
+    /// instead would recompute the hash locally and can silently mismatch the keyexpr.
+    ///
+    /// [`create_dyn_sub_auto`]: ZNode::create_dyn_sub_auto
+    /// [`create_dyn_sub`]: ZNode::create_dyn_sub
+    pub async fn create_dyn_sub_auto_qos(
+        &self,
+        topic: &str,
+        discovery_timeout: Duration,
+        qos: crate::qos::QosProfile,
+    ) -> Result<DynSub> {
+        debug!(
+            "[NOD] Creating dynamic subscriber (auto-discovery, qos={:?}) for topic: {}",
+            qos, topic
+        );
+
+        let discovered = self.discover_topic_schema(topic, discovery_timeout).await?;
+
+        info!(
+            "[NOD] Discovered schema for topic {}: {} (hash: {})",
+            discovered.qualified_topic, discovered.schema.type_name, discovered.type_hash
+        );
+
+        self.create_dyn_sub_impl(
+            topic,
+            Some(discovered_schema_type_info(&discovered)),
+            discovered.schema,
+        )
+        .with_qos(qos)
+        .build()
+    }
+
     /// Create a dynamic subscriber with a known schema.
     ///
     /// Use this when you already have the schema (e.g., loaded from a file
